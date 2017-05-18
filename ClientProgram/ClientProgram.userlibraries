@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Python 3.6.0 (C:\Users\jonathan.guerne\AppData\Local\Continuum\Anaconda3\python.exe) interpreter library">
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/DLLs" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages/Sphinx-1.5.1-py3.6.egg" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages/win32" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages/win32/lib" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages/pythonwin" />
+    <archive path="C:/Users/jonathan.guerne/AppData/Local/Continuum/Anaconda3/Lib/site-packages/setuptools-27.2.0-py3.6.egg" />
+    <archive path="C:/Users/jonathan.guerne/.IdeaIC2016.3/system/python_stubs/-1537190929" />
+    <archive path="C:/Users/jonathan.guerne/.IdeaIC2016.3/config/plugins/python/helpers/python-skeletons" />
+  </library>
+</eclipse-userlibraries>
+
