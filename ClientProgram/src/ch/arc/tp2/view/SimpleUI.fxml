@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="root" fx:controller="ch.arc.tp2.view.SimpleUIController">
+   <center>
+      <Label fx:id="myLabel" text="Bonjour" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <Button mnemonicParsing="false" text="Click me" fx:id="myButton" BorderPane.alignment="CENTER" onAction="#handleButtonClick" />
+   </bottom>
+</BorderPane>

@@ -13,6 +13,9 @@ import java.net.Socket;
 */
 public class main
 {
+
+    private static final int port = 52017;
+
     public static void main(String[] args)
     {
         Socket socket = null;
@@ -22,7 +25,7 @@ public class main
         try
         {
             System.out.println("Client is starting");
-            socket = new Socket("127.0.0.1", 2017);
+            socket = new Socket("127.0.0.1", port);
 
             System.out.println("CLIENT reading from server");
 
