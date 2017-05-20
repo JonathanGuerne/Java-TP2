@@ -14,7 +14,8 @@ import java.net.Socket;
 public class main
 {
 
-    private static final int port = 52017;
+    private static int port = 2002;
+    private static String address = "127.0.0.1";
 
     public static void main(String[] args)
     {
@@ -27,35 +28,33 @@ public class main
             System.out.println("Client is starting");
             socket = new Socket("127.0.0.1", port);
 
-            System.out.println("CLIENT reading from server");
+            System.out.println("CLIENT connecting to the server");
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            System.out.println("CLIENT - from server : " + in.readLine());
-
-
             out = new PrintWriter(socket.getOutputStream());
-            out.println("Je suis un client Heureux");
 
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        finally
-        {
-            try
-            {
-                out.flush();
 
-                in.close();
-                socket.close();
-                out.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
+
+        Sender sender = new Sender(out);
+        sender.setDaemon(true);
+        sender.start();
+
+        try{
+            String message;
+
+            while ((message = in.readLine())!= null){
+                System.out.println(message);
             }
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }
