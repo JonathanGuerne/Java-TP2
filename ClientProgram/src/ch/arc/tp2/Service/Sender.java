@@ -1,9 +1,8 @@
 package ch.arc.tp2.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import ch.arc.tp2.Packets.TextMessage;
+
+import java.io.*;
 import java.util.ArrayList;
 
 /*
@@ -14,11 +13,11 @@ import java.util.ArrayList;
 public class Sender extends Thread
 {
 
-    PrintWriter out;
-    ArrayList<String> messages;
+    ObjectOutputStream out;
+    ArrayList<TextMessage> messages;
 
 
-    public Sender(PrintWriter out)
+    public Sender(ObjectOutputStream out)
     {
         this.out = out;
         messages = new ArrayList<>();
@@ -26,7 +25,7 @@ public class Sender extends Thread
     }
 
 
-    public synchronized void addMessage(String message){
+    public synchronized void addMessage(TextMessage message){
         messages.add(message);
         notify();
     }
@@ -52,8 +51,15 @@ public class Sender extends Thread
             }
 
 
-            out.println(messages.get(0));
-            out.flush();
+            try
+            {
+                out.writeObject(messages.get(0));
+                out.flush();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
 
             messages.remove(0);
         }

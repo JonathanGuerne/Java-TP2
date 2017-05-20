@@ -87,15 +87,18 @@ public class RootLayoutController
 
     /**
      * Updates the different information about the server configuration (bottom)
-     *
-     * @param address
+     *  @param address
      * @param port
+     * @param succes
      */
-    public void updateServerInfo()
+    public void updateServerInfo(boolean succes)
     {
         lb_serverAddress.setText(serverConfig.getServerAddress());
         lb_serverPort.setText(String.valueOf(serverConfig.getServerPort()));
         lb_status.setText(serverConfig.getConnectionStatus());
+        if(succes){
+            chatController.startNetworkService();
+        }
     }
 
 
@@ -119,11 +122,8 @@ public class RootLayoutController
         boolean okClicked = mainApp.showServerEditDialog();
         if (okClicked)
         {
-            if (this.connectToServer())
-            {
-                chatController.startNetworkService();
-            }
-            updateServerInfo();
+            boolean success =  this.connectToServer();
+            updateServerInfo(success);
         }
 
 

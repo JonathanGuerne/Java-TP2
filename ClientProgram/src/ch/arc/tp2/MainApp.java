@@ -81,11 +81,11 @@ public class MainApp extends Application
             showChat();
 
             //Set the server config into the main controller
-            mainController.setServerConfig(serverConfig);
-            //Try to connect to the server
-            mainController.connectToServer();
+            mainController.setServerConfig(serverConfig);            //Try to connect to the server
+
+            boolean success = (mainController.connectToServer());
             //Update the displayed info about server config
-            mainController.updateServerInfo();
+            mainController.updateServerInfo(success);
 
         } catch (IOException e) {
             e.printStackTrace();
