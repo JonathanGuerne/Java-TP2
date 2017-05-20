@@ -96,7 +96,6 @@ public class RootLayoutController
         lb_serverAddress.setText(serverConfig.getServerAddress());
         lb_serverPort.setText(String.valueOf(serverConfig.getServerPort()));
         lb_status.setText(serverConfig.getConnectionStatus());
-        chatController.startNetworkService();
     }
 
 
@@ -122,8 +121,9 @@ public class RootLayoutController
         {
             if (this.connectToServer())
             {
-                this.updateServerInfo();
+                chatController.startNetworkService();
             }
+            updateServerInfo();
         }
 
 
