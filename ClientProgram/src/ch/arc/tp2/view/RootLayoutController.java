@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /**
  * Main frame with menu, containing the chatroom stage
  *
- * @author Anthony Fleury / Jonathan Guerne 
+ * @author Anthony Fleury / Jonathan Guerne
  */
 public class RootLayoutController
 {
@@ -20,112 +20,121 @@ public class RootLayoutController
     private ServerConfig serverConfig;
 
     private MainApp mainApp;
-    
+
     @FXML
     private Label lb_status_text;
     @FXML
     private Label lb_serverAddress_text;
     @FXML
     private Label lb_serverPort_text;
-    
+
     @FXML
     private Label lb_status;
     @FXML
     private Label lb_serverAddress;
     @FXML
     private Label lb_serverPort;
-    
-    
-    
-    
+
+
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public RootLayoutController() {
-        
+    public RootLayoutController()
+    {
+
     }
-    
-    
+
+
     /**
      * Is called by the main application to give a reference back to itself.
-     * 
+     *
      * @param mainApp
      */
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(MainApp mainApp)
+    {
         this.mainApp = mainApp;
     }
-    
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize()
+    {
     }
-    
+
     /**
      * Sets the stage of the main window.
      *
      * @param dialogStage
      */
-    public void setDialogStage(Stage stage) {
+    public void setDialogStage(Stage stage)
+    {
         this.stage = stage;
     }
-    
+
     /**
      * Give the chat controller to the main controller
-     * 
+     *
      * @param chatController
      */
     public void setChatController(ChatController chatController)
     {
         this.chatController = chatController;
     }
-    
+
     /**
      * Updates the different information about the server configuration (bottom)
-     * 
+     *
      * @param address
      * @param port
      */
-    public void updateServerInfo(){
+    public void updateServerInfo()
+    {
         lb_serverAddress.setText(serverConfig.getServerAddress());
         lb_serverPort.setText(String.valueOf(serverConfig.getServerPort()));
         lb_status.setText(serverConfig.getConnectionStatus());
+        chatController.startNetworkService();
     }
-    
-    
+
+
     /**
      * Called when the user clicks Close menu.
      */
     @FXML
-    private void handleCloseMenu() {
+    private void handleCloseMenu()
+    {
         stage.close();
     }
-    
+
     /**
      * Called when the user clicks Server Config menu.
      */
     @FXML
-    private void handleServConfigMenu() {
+    private void handleServConfigMenu()
+    {
 
 
         boolean okClicked = mainApp.showServerEditDialog();
-        if (okClicked) {
-            this.connectToServer();
-            this.updateServerInfo();
-
+        if (okClicked)
+        {
+            if (this.connectToServer())
+            {
+                this.updateServerInfo();
+            }
         }
 
 
     }
-    
+
     /**
      * Called when the user clicks About menu.
      */
     @FXML
-    private void handleAboutMenu() {
+    private void handleAboutMenu()
+    {
         // Show the info message.
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.initOwner(stage);
@@ -135,35 +144,39 @@ public class RootLayoutController
 
         alert.showAndWait();
     }
-    
+
     /**
      * Give the serverconfig object to the main controller
-     * 
+     *
      * @param serverConfig
      */
     public void setServerConfig(ServerConfig serverConfig)
     {
         this.serverConfig = serverConfig;
     }
-    
+
     /**
      * Try to connect to the server and update the status into the server config
      */
-    public void connectToServer(){
-        //TODO connection to the server
-        System.out.println("Try to connect to the server : " + serverConfig.getServerAddress()+":"+serverConfig.getServerPort()+ " as " + serverConfig.getPseudo());
-        
-        if(serverConfig.getServerAddress().equals("127.0.0.1") && serverConfig.getServerPort() == 52017){
-            System.out.println("CONNECTED");
-            serverConfig.setConnectionStatus("OK");
-        }
-        else{
+    public boolean connectToServer()
+    {
+        System.out.println("Try to connect to the server : " + serverConfig.getServerAddress() + ":" + serverConfig.getServerPort() + " as " + serverConfig.getPseudo());
+
+        boolean connectSucces = chatController.setNetworkService(serverConfig.getServerAddress(), serverConfig.getServerPort());
+
+        if (!connectSucces)
+        {
             System.out.println("CONNECTION ERROR");
             serverConfig.setConnectionStatus("NO");
         }
-    
+        else
+        {
+            System.out.println("CONNECTED");
+            serverConfig.setConnectionStatus("OK");
+        }
+
+        return connectSucces;
     }
-    
-    
-    
+
+
 }

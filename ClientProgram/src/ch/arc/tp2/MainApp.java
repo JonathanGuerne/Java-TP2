@@ -53,7 +53,7 @@ public class MainApp extends Application
 
         initRootLayout();
 
-        showChat();
+
     }
 
     /**
@@ -70,7 +70,16 @@ public class MainApp extends Application
             mainController = loader.getController();
             mainController.setDialogStage(primaryStage);
             mainController.setMainApp(this);
-            
+
+
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+
+            showChat();
+
             //Set the server config into the main controller
             mainController.setServerConfig(serverConfig);
             //Try to connect to the server
@@ -78,11 +87,6 @@ public class MainApp extends Application
             //Update the displayed info about server config
             mainController.updateServerInfo();
 
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

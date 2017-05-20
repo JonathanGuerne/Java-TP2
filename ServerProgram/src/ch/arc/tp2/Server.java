@@ -21,7 +21,7 @@ public class Server
         ServerSocket serverSocket = null;
         try{
             serverSocket = new ServerSocket(port);
-            System.out.println("Server are ready");
+            System.out.println("Server is ready");
         }
         catch (IOException e)
         {
