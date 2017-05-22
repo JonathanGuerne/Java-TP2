@@ -1,6 +1,7 @@
 package ch.arc.tp2.view;
 
 import ch.arc.tp2.MainApp;
+import ch.arc.tp2.Packets.TextMessage;
 import ch.arc.tp2.Service.ConnexionException;
 import ch.arc.tp2.Service.Sender;
 import ch.arc.tp2.model.ServerConfig;
@@ -11,10 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -80,8 +78,12 @@ public class ChatController {
         //TODO send message to server socket
         System.out.println("Message envoyé par " + serverConfig.getPseudo() + " : " + tf_message.getText());
 
-        networkService.addMessage(tf_message.getText());
-        
+        TextMessage message = new TextMessage();
+        message.author = serverConfig.getPseudo();
+        message.message = tf_message.getText();
+
+        networkService.addMessage(message);
+
         tf_message.clear();
 
     }
@@ -94,15 +96,17 @@ public class ChatController {
      */
     public boolean setNetworkService(String address,int port){
         networkService = new NetworkService(address,port);
+
+        boolean success;
         try{
-            networkService.initSocket();
+            success = networkService.initSocket();
         }
         catch(ConnexionException e){
             e.printStackTrace();
             return false;
         }
 
-        return true;
+        return success;
     }
 
 
@@ -117,8 +121,8 @@ public class ChatController {
     }
     
     public void enableSending(){
-        tf_message.setDisable(true);
-        bt_send.setDisable(true);
+        tf_message.setDisable(false);
+        bt_send.setDisable(false);
     }
 
 
@@ -135,8 +139,15 @@ public class ChatController {
      * append text to the chat area
      * @param message
      */
-    public void appendText(String message){
+    public synchronized void appendText(String message){
         this.ta_chatDisplay.appendText(message+"\n");
+    }
+
+    public void stopServices()
+    {
+        if(networkService != null){
+            networkService.stopService();
+        }
     }
 
     public class NetworkService extends Service<Integer>
@@ -153,20 +164,38 @@ public class ChatController {
             this.adresse = adresse;
         }
 
-        public synchronized void addMessage(String message){
+        public synchronized void addMessage(TextMessage message){
+            System.out.println(Thread.currentThread().getName());
             sender.addMessage(message);
         }
 
-        public void initSocket() throws ConnexionException{
+        public boolean initSocket() throws ConnexionException{
             try
             {
                 socket = new Socket(adresse, port);
+                return socket.isConnected();
             }
             catch (IOException e)
             {
                 //e.printStackTrace();
                 throw new ConnexionException("unable to connect to the server");
             }
+        }
+
+        public synchronized void stopService(){
+            try
+            {
+                if(socket != null && !socket.isClosed())
+                {
+                    socket.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            this.cancel();
         }
 
 
@@ -178,31 +207,36 @@ public class ChatController {
                 @Override
                 protected Integer call() throws Exception
                 {
-                    BufferedReader in = null;
-                    PrintWriter out = null;
+                    ObjectInputStream in = null;
+                    ObjectOutputStream out = null;
 
                     try
                     {
                         System.out.println("Client is starting");
-                        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        out = new PrintWriter(socket.getOutputStream());
-
+                        out = new ObjectOutputStream(socket.getOutputStream());
+                        in = new ObjectInputStream(socket.getInputStream());
                     }
                     catch (IOException e)
                     {
                         e.printStackTrace();
                     }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
 
+                    System.out.println(Thread.currentThread().getName());
+
+                    System.out.println("---------------");
 
                     sender = new Sender(out);
                     sender.setDaemon(true);
                     sender.start();
 
                     try{
-                        String message;
-
-                        while ((message = in.readLine())!= null){
-                            appendText(message);
+                        TextMessage message;
+                        while ((message = (TextMessage) in.readObject())!= null)
+                        {
+                            appendText(message.toString());
                         }
                     }
                     catch (IOException e)

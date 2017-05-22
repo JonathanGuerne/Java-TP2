@@ -1,5 +1,7 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.TextMessage;
+
 import java.util.ArrayList;
 
 /*
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 public class ServerDispatcher extends Thread
 {
 
-    private ArrayList<String> messageQueue;
+    private ArrayList<TextMessage> messageQueue;
     private ArrayList<ClientInfo> clients;
 
     public ServerDispatcher()
@@ -30,7 +32,7 @@ public class ServerDispatcher extends Thread
 
             while (true) {
 
-                String message = getNextMessageFromQueue();
+                TextMessage message = getNextMessageFromQueue();
 
                 sendMessageToAllClient(message);
 
@@ -44,13 +46,13 @@ public class ServerDispatcher extends Thread
 
     }
 
-    public synchronized void dispatchMessage(ClientInfo clientInfo, String message)
+    public synchronized void dispatchMessage(ClientInfo clientInfo, TextMessage message)
     {
         messageQueue.add(message);
         notify();
     }
 
-    private synchronized String getNextMessageFromQueue()
+    private synchronized TextMessage getNextMessageFromQueue()
 
             throws InterruptedException
 
@@ -60,7 +62,7 @@ public class ServerDispatcher extends Thread
 
             wait();
 
-        String message = (String) messageQueue.get(0);
+        TextMessage message = (TextMessage) messageQueue.get(0);
 
         messageQueue.remove(0);
 
@@ -69,7 +71,7 @@ public class ServerDispatcher extends Thread
     }
 
 
-    public synchronized void sendMessageToAllClient(String message){
+    public synchronized void sendMessageToAllClient(TextMessage message){
         for(ClientInfo c:clients){
             c.clientSender.sendMessage(message);
         }

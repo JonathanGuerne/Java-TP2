@@ -1,6 +1,9 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.TextMessage;
+
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -14,10 +17,10 @@ import java.util.ArrayList;
 public class ClientSender extends Thread
 {
     ServerDispatcher serverDispatcher;
-    PrintWriter out;
+    ObjectOutputStream out;
     ClientInfo clientInfo;
 
-    private ArrayList<String> messagesQueue;
+    private ArrayList<TextMessage> messagesQueue;
 
 
     public ClientSender(ServerDispatcher serverDispatcher, ClientInfo clientInfo) throws IOException
@@ -27,28 +30,38 @@ public class ClientSender extends Thread
 
         Socket socket = clientInfo.socket;
 
-        out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        out = new ObjectOutputStream(socket.getOutputStream());
 
         messagesQueue = new ArrayList<>();
+
+        System.out.println("out server ok");
     }
 
 
-    public synchronized void sendMessage(String message){
+    public synchronized void sendMessage(TextMessage message){
         messagesQueue.add(message);
         notify();
     }
 
-    public void sendMessageToClient(String message){
-        out.println(message);
-        out.flush();
+    public void sendMessageToClient(TextMessage message){
+        try
+        {
+            out.writeObject(message);
+            out.flush();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
-    public synchronized String getNextMessageFromQueue() throws InterruptedException
+    public synchronized TextMessage getNextMessageFromQueue() throws InterruptedException
     {
         while (messagesQueue.size() == 0)
             wait();
 
-        String message = messagesQueue.get(0);
+        TextMessage message = messagesQueue.get(0);
         messagesQueue.remove(0);
         return message;
     }
@@ -61,7 +74,7 @@ public class ClientSender extends Thread
         {
             while (!isInterrupted())
             {
-                String s = getNextMessageFromQueue();
+                TextMessage s = getNextMessageFromQueue();
                 sendMessageToClient(s);
             }
         }

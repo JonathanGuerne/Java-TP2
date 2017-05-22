@@ -1,8 +1,11 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.TextMessage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /*
@@ -14,7 +17,7 @@ public class ClientListener extends Thread
 {
     ServerDispatcher serverDispatcher;
     ClientInfo clientInfo;
-    BufferedReader in;
+    ObjectInputStream in;
 
     public ClientListener(ServerDispatcher serverDispatcher, ClientInfo clientInfo) throws IOException
     {
@@ -22,7 +25,8 @@ public class ClientListener extends Thread
         this.clientInfo = clientInfo;
         this.in = in;
         Socket socket = clientInfo.socket;
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        in = new ObjectInputStream(socket.getInputStream());
+        System.out.println("in server ok");
     }
 
     @Override
@@ -32,7 +36,7 @@ public class ClientListener extends Thread
         {
             while (!isInterrupted())
             {
-                String message = in.readLine();
+                TextMessage message = (TextMessage) in.readObject();
 
                 if( message == null){
                     break;
@@ -42,6 +46,10 @@ public class ClientListener extends Thread
             }
         }
         catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }

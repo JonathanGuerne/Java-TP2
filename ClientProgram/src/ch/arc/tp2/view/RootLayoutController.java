@@ -87,9 +87,9 @@ public class RootLayoutController
 
     /**
      * Updates the different information about the server configuration (bottom)
-     *
-     * @param address
+     *  @param address
      * @param port
+     * @param succes
      */
     public void updateServerInfo()
     {
@@ -115,13 +115,20 @@ public class RootLayoutController
     private void handleServConfigMenu()
     {
 
+        int temp_port = serverConfig.getServerPort();
+        String temp_adresse = serverConfig.getServerAddress();
+        String temp_pseudo = serverConfig.getPseudo();
 
         boolean okClicked = mainApp.showServerEditDialog();
         if (okClicked)
         {
-            if (this.connectToServer())
+            if(serverConfig.getServerPort() != temp_port || serverConfig.getServerAddress()!= temp_adresse)
             {
-                chatController.startNetworkService();
+                chatController.stopServices();
+                boolean success = this.connectToServer();
+                if(success){
+                    chatController.startNetworkService();
+                }
             }
             updateServerInfo();
         }
@@ -168,11 +175,13 @@ public class RootLayoutController
         {
             System.out.println("CONNECTION ERROR");
             serverConfig.setConnectionStatus("NO");
+            chatController.disableSending();
         }
         else
         {
             System.out.println("CONNECTED");
             serverConfig.setConnectionStatus("OK");
+            chatController.enableSending();
         }
 
         return connectSucces;

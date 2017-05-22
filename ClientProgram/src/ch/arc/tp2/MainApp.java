@@ -27,6 +27,7 @@ public class MainApp extends Application
     private Stage primaryStage;
     private BorderPane rootLayout;
     private RootLayoutController mainController;
+    private ChatController chatController;
     
     private ServerConfig serverConfig;
     
@@ -81,11 +82,18 @@ public class MainApp extends Application
             showChat();
 
             //Set the server config into the main controller
-            mainController.setServerConfig(serverConfig);
-            //Try to connect to the server
-            mainController.connectToServer();
+            mainController.setServerConfig(serverConfig);            //Try to connect to the server
+
+            boolean success = (mainController.connectToServer());
             //Update the displayed info about server config
+
+            if(success){
+                chatController.startNetworkService();
+            }
+
             mainController.updateServerInfo();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,12 +114,12 @@ public class MainApp extends Application
             rootLayout.setCenter(chat);
 
 
-            ChatController controller = loader.getController();
+            chatController = loader.getController();
             // Give the controller access to the main app.
-            controller.setMainApp(this);
-            controller.setServerConfig(serverConfig);
+            chatController.setMainApp(this);
+            chatController.setServerConfig(serverConfig);
             
-            mainController.setChatController(controller);
+            mainController.setChatController(chatController);
             
 
         } catch (IOException e) {

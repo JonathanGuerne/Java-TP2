@@ -40,8 +40,9 @@ public class Server
 
                 clientInfo.socket=socket;
 
-                ClientListener clientListener= new ClientListener(serverDispatcher,clientInfo);
                 ClientSender clientSender = new ClientSender(serverDispatcher,clientInfo);
+                ClientListener clientListener= new ClientListener(serverDispatcher,clientInfo);
+
 
                 clientInfo.clientSender = clientSender;
                 clientInfo.clientListener = clientListener;
