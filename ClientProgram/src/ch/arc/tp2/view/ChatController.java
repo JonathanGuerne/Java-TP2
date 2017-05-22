@@ -96,15 +96,17 @@ public class ChatController {
      */
     public boolean setNetworkService(String address,int port){
         networkService = new NetworkService(address,port);
+
+        boolean success;
         try{
-            networkService.initSocket();
+            success = networkService.initSocket();
         }
         catch(ConnexionException e){
             e.printStackTrace();
             return false;
         }
 
-        return true;
+        return success;
     }
 
 
@@ -119,8 +121,8 @@ public class ChatController {
     }
     
     public void enableSending(){
-        tf_message.setDisable(true);
-        bt_send.setDisable(true);
+        tf_message.setDisable(false);
+        bt_send.setDisable(false);
     }
 
 
@@ -137,8 +139,15 @@ public class ChatController {
      * append text to the chat area
      * @param message
      */
-    public void appendText(String message){
+    public synchronized void appendText(String message){
         this.ta_chatDisplay.appendText(message+"\n");
+    }
+
+    public void stopServices()
+    {
+        if(networkService != null){
+            networkService.stopService();
+        }
     }
 
     public class NetworkService extends Service<Integer>
@@ -160,16 +169,33 @@ public class ChatController {
             sender.addMessage(message);
         }
 
-        public void initSocket() throws ConnexionException{
+        public boolean initSocket() throws ConnexionException{
             try
             {
                 socket = new Socket(adresse, port);
+                return socket.isConnected();
             }
             catch (IOException e)
             {
                 //e.printStackTrace();
                 throw new ConnexionException("unable to connect to the server");
             }
+        }
+
+        public synchronized void stopService(){
+            try
+            {
+                if(socket != null && !socket.isClosed())
+                {
+                    socket.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            this.cancel();
         }
 
 
