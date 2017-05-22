@@ -207,8 +207,11 @@ public class ChatController {
                     sender.start();
 
                     try{
-                        TextMessage message = (TextMessage) in.readObject();
-                        appendText(message.toString());
+                        TextMessage message;
+                        while ((message = (TextMessage) in.readObject())!= null)
+                        {
+                            appendText(message.toString());
+                        }
                     }
                     catch (IOException e)
                     {
