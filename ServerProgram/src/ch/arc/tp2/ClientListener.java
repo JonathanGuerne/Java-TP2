@@ -26,6 +26,7 @@ public class ClientListener extends Thread
         this.in = in;
         Socket socket = clientInfo.socket;
         in = new ObjectInputStream(socket.getInputStream());
+        System.out.println("in server ok");
     }
 
     @Override

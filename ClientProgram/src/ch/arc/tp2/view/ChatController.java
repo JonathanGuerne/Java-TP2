@@ -156,6 +156,7 @@ public class ChatController {
         }
 
         public synchronized void addMessage(TextMessage message){
+            System.out.println(Thread.currentThread().getName());
             sender.addMessage(message);
         }
 
@@ -186,9 +187,8 @@ public class ChatController {
                     try
                     {
                         System.out.println("Client is starting");
-                        in = new ObjectInputStream(socket.getInputStream());
                         out = new ObjectOutputStream(socket.getOutputStream());
-
+                        in = new ObjectInputStream(socket.getInputStream());
                     }
                     catch (IOException e)
                     {
@@ -198,6 +198,9 @@ public class ChatController {
                         e.printStackTrace();
                     }
 
+                    System.out.println(Thread.currentThread().getName());
+
+                    System.out.println("---------------");
 
                     sender = new Sender(out);
                     sender.setDaemon(true);

@@ -33,6 +33,8 @@ public class ClientSender extends Thread
         out = new ObjectOutputStream(socket.getOutputStream());
 
         messagesQueue = new ArrayList<>();
+
+        System.out.println("out server ok");
     }
 
 
