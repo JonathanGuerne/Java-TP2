@@ -1,5 +1,6 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.Packet;
 import ch.arc.tp2.Packets.TextMessage;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ClientSender extends Thread
     ObjectOutputStream out;
     ClientInfo clientInfo;
 
-    private ArrayList<TextMessage> messagesQueue;
+    private ArrayList<Packet> messagesQueue;
 
 
     public ClientSender(ServerDispatcher serverDispatcher, ClientInfo clientInfo) throws IOException
@@ -38,12 +39,14 @@ public class ClientSender extends Thread
     }
 
 
-    public synchronized void sendMessage(TextMessage message){
+    public synchronized void sendMessage(Packet message)
+    {
         messagesQueue.add(message);
         notify();
     }
 
-    public void sendMessageToClient(TextMessage message){
+    public void sendMessageToClient(Packet message)
+    {
         try
         {
             out.writeObject(message);
@@ -56,12 +59,11 @@ public class ClientSender extends Thread
 
     }
 
-    public synchronized TextMessage getNextMessageFromQueue() throws InterruptedException
+    public synchronized Packet getNextMessageFromQueue() throws InterruptedException
     {
         while (messagesQueue.size() == 0)
             wait();
-
-        TextMessage message = messagesQueue.get(0);
+        Packet message = messagesQueue.get(0);
         messagesQueue.remove(0);
         return message;
     }
@@ -74,16 +76,26 @@ public class ClientSender extends Thread
         {
             while (!isInterrupted())
             {
-                TextMessage s = getNextMessageFromQueue();
+                Packet s = getNextMessageFromQueue();
                 sendMessageToClient(s);
             }
         }
         catch (InterruptedException e)
+        {
+
+        }
+
+        try
+        {
+            out.close();
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
 
         clientInfo.clientListener.interrupt();
         serverDispatcher.deleteClient(clientInfo);
+
     }
 }
