@@ -1,7 +1,9 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.Packet;
 import ch.arc.tp2.Packets.TextMessage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 public class ServerDispatcher extends Thread
 {
 
-    private ArrayList<TextMessage> messageQueue;
+    private ArrayList<Packet> messageQueue;
     private ArrayList<ClientInfo> clients;
 
     public ServerDispatcher()
@@ -32,7 +34,7 @@ public class ServerDispatcher extends Thread
 
             while (true) {
 
-                TextMessage message = getNextMessageFromQueue();
+                Packet message = getNextMessageFromQueue();
 
                 sendMessageToAllClient(message);
 
@@ -46,13 +48,13 @@ public class ServerDispatcher extends Thread
 
     }
 
-    public synchronized void dispatchMessage(ClientInfo clientInfo, TextMessage message)
+    public synchronized void dispatchMessage(ClientInfo clientInfo, Packet message)
     {
         messageQueue.add(message);
         notify();
     }
 
-    private synchronized TextMessage getNextMessageFromQueue()
+    private synchronized Packet getNextMessageFromQueue()
 
             throws InterruptedException
 
@@ -62,7 +64,7 @@ public class ServerDispatcher extends Thread
 
             wait();
 
-        TextMessage message = (TextMessage) messageQueue.get(0);
+        Packet message = (Packet) messageQueue.get(0);
 
         messageQueue.remove(0);
 
@@ -71,7 +73,7 @@ public class ServerDispatcher extends Thread
     }
 
 
-    public synchronized void sendMessageToAllClient(TextMessage message){
+    public synchronized void sendMessageToAllClient(Packet message){
         for(ClientInfo c:clients){
             c.clientSender.sendMessage(message);
         }
@@ -82,7 +84,15 @@ public class ServerDispatcher extends Thread
     {
         int index = clients.indexOf(clientInfo);
         if(index != -1){
-            messageQueue.remove(index);
+            try
+            {
+                clients.get(index).socket.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            clients.remove(index);
         }
     }
 }

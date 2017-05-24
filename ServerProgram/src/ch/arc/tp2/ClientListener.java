@@ -1,11 +1,9 @@
 package ch.arc.tp2;
 
+import ch.arc.tp2.Packets.Packet;
 import ch.arc.tp2.Packets.TextMessage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.Socket;
 
 /*
@@ -36,7 +34,7 @@ public class ClientListener extends Thread
         {
             while (!isInterrupted())
             {
-                TextMessage message = (TextMessage) in.readObject();
+                Packet message = (Packet) in.readObject();
 
                 if( message == null){
                     break;
@@ -44,6 +42,9 @@ public class ClientListener extends Thread
 
                 serverDispatcher.dispatchMessage(clientInfo,message);
             }
+        }
+        catch (EOFException e){
+            this.interrupt();
         }
         catch (IOException e)
         {
@@ -55,8 +56,19 @@ public class ClientListener extends Thread
         }
 
 
+
+        try
+        {
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
         clientInfo.clientSender.interrupt();
 
         serverDispatcher.deleteClient(clientInfo);
+
     }
 }

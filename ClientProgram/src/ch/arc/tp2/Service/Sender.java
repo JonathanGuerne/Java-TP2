@@ -1,5 +1,6 @@
 package ch.arc.tp2.Service;
 
+import ch.arc.tp2.Packets.Packet;
 import ch.arc.tp2.Packets.TextMessage;
 
 import java.io.*;
@@ -14,7 +15,7 @@ public class Sender extends Thread
 {
 
     ObjectOutputStream out;
-    ArrayList<TextMessage> messages;
+    ArrayList<Packet> messages;
 
 
     public Sender(ObjectOutputStream out)
@@ -25,7 +26,7 @@ public class Sender extends Thread
     }
 
 
-    public synchronized void addMessage(TextMessage message){
+    public synchronized void addMessage(Packet message){
         messages.add(message);
         notify();
     }

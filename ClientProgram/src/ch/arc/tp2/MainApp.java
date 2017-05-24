@@ -4,7 +4,9 @@ package ch.arc.tp2;/*
  * create date : 16.03.2017
 */
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 
 import ch.arc.tp2.view.ServerEditDialogController;
@@ -12,44 +14,75 @@ import ch.arc.tp2.model.ServerConfig;
 import ch.arc.tp2.view.ChatController;
 import ch.arc.tp2.view.RootLayoutController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import javax.swing.*;
 
 
 public class MainApp extends Application
 {
-    
-    
+
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     private RootLayoutController mainController;
     private ChatController chatController;
-    
+
     private ServerConfig serverConfig;
-    
-    
+
+
     public static void main(String[] args)
     {
         launch(args);
     }
-    
+
     /**
      * Constructor
      */
-    public MainApp() {
+    public MainApp()
+    {
         serverConfig = new ServerConfig();
     }
 
-    
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
+
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        catch (InstantiationException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        catch (UnsupportedLookAndFeelException e)
+        {
+            e.printStackTrace();
+        }
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ChatBox");
-        
+
         serverConfig = new ServerConfig();
 
         initRootLayout();
@@ -60,14 +93,16 @@ public class MainApp extends Application
     /**
      * Initializes the root layout.
      */
-    public void initRootLayout() {
-        try {
+    public void initRootLayout()
+    {
+        try
+        {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
-            
-            
+
+
             mainController = loader.getController();
             mainController.setDialogStage(primaryStage);
             mainController.setMainApp(this);
@@ -77,6 +112,32 @@ public class MainApp extends Application
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
+
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+            {
+                @Override
+                public void handle(WindowEvent event)
+                {
+                    chatController.stopServices();
+                    String folderPath = System.getProperty("user.home") + File.separator + "chatDownloads";
+                    File dir = new File(folderPath);
+                    if (dir.exists() && dir.list().length > 0)
+                    {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION
+                                , "Delete files in download directory ?"
+                                , ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait();
+                        if (alert.getResult() == ButtonType.YES){
+                            File[] entries = dir.listFiles();
+                            for (File f : entries)
+                            {
+                                f.delete();
+                            }
+                        }
+                    }
+                }
+            });
+
             primaryStage.show();
 
             showChat();
@@ -87,15 +148,17 @@ public class MainApp extends Application
             boolean success = (mainController.connectToServer());
             //Update the displayed info about server config
 
-            if(success){
+            if (success)
+            {
                 chatController.startNetworkService();
             }
 
             mainController.updateServerInfo();
 
 
-
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
@@ -103,8 +166,10 @@ public class MainApp extends Application
     /**
      * Shows the chat inside the root layout.
      */
-    public void showChat() {
-        try {
+    public void showChat()
+    {
+        try
+        {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/Chat.fxml"));
@@ -118,15 +183,17 @@ public class MainApp extends Application
             // Give the controller access to the main app.
             chatController.setMainApp(this);
             chatController.setServerConfig(serverConfig);
-            
-            mainController.setChatController(chatController);
-            
 
-        } catch (IOException e) {
+            mainController.setChatController(chatController);
+
+
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Opens a dialog to edit the server config. If the user
      * clicks OK, the changes are saved and true
@@ -134,8 +201,10 @@ public class MainApp extends Application
      *
      * @return true if the user clicked OK, false otherwise.
      */
-    public boolean showServerEditDialog() {
-        try {
+    public boolean showServerEditDialog()
+    {
+        try
+        {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ServerEditDialog.fxml"));
@@ -150,7 +219,7 @@ public class MainApp extends Application
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            
+
             ServerEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             // Set the serverconfig into the controller.
@@ -160,21 +229,28 @@ public class MainApp extends Application
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             return false;
         }
     }
-    
+
 
     /**
      * Returns the main stage.
+     *
      * @return
      */
-    public Stage getPrimaryStage() {
+    public Stage getPrimaryStage()
+    {
         return primaryStage;
     }
 
 
-    
+    public BorderPane getRootLayout()
+    {
+        return rootLayout;
+    }
 }
