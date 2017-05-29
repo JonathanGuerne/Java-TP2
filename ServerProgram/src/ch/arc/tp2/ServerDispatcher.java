@@ -8,14 +8,15 @@ import java.util.ArrayList;
 
 /*
  * Project Name : ServerProgram
- * author : jonathan.guerne
+ * author : jonathan.guerne & anthony fleury
  * creation date : 18.05.2017
+ * class use to manage all clients
 */
 public class ServerDispatcher extends Thread
 {
 
-    private ArrayList<Packet> messageQueue;
-    private ArrayList<ClientInfo> clients;
+    private ArrayList<Packet> messageQueue; //list of message to send
+    private ArrayList<ClientInfo> clients; //list of clients
 
     public ServerDispatcher()
     {
@@ -23,26 +24,30 @@ public class ServerDispatcher extends Thread
         clients = new ArrayList<>();
     }
 
-    public synchronized void addClient(ClientInfo clientInfo){
+    public synchronized void addClient(ClientInfo clientInfo)
+    {
         clients.add(clientInfo);
     }
 
     @Override
     public void run()
     {
-        try {
+        try
+        {
 
-            while (true) {
+            while (true)
+            {
 
+                //get a new message to send (will wait if list is empty)
                 Packet message = getNextMessageFromQueue();
 
                 sendMessageToAllClient(message);
 
             }
 
-        } catch (InterruptedException ie) {
-
-            // Thread interrupted. Stop its execution
+        }
+        catch (InterruptedException ie)
+        {
 
         }
 
@@ -54,13 +59,17 @@ public class ServerDispatcher extends Thread
         notify();
     }
 
-    private synchronized Packet getNextMessageFromQueue()
 
-            throws InterruptedException
-
+    /**
+     * get the next message to send from the list of message
+     * if there is not message in the list the thread will wait
+     * @return Packet object to send
+     * @throws InterruptedException
+     */
+    private synchronized Packet getNextMessageFromQueue() throws InterruptedException
     {
 
-        while (messageQueue.size()==0)
+        while (messageQueue.size() == 0)
 
             wait();
 
@@ -73,20 +82,31 @@ public class ServerDispatcher extends Thread
     }
 
 
-    public synchronized void sendMessageToAllClient(Packet message){
-        for(ClientInfo c:clients){
+    /**
+     * will send a message to all connected client
+     * @param message packet to send
+     */
+    public synchronized void sendMessageToAllClient(Packet message)
+    {
+        for (ClientInfo c : clients)
+        {
             c.clientSender.sendMessage(message);
         }
     }
 
 
+    /**
+     * remove a client from the list
+     * @param clientInfo client to remove
+     */
     public synchronized void deleteClient(ClientInfo clientInfo)
     {
         int index = clients.indexOf(clientInfo);
-        if(index != -1){
+        if (index != -1)
+        {
             try
             {
-                clients.get(index).socket.close();
+                clients.get(index).socket.close(); //close client specific socket
             }
             catch (IOException e)
             {

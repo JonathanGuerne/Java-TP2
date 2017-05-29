@@ -1,15 +1,17 @@
 package ch.arc.tp2;
 
 import ch.arc.tp2.Packets.Packet;
-import ch.arc.tp2.Packets.TextMessage;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /*
  * Project Name : ServerProgram
- * author : jonathan.guerne
+ * author : jonathan.guerne & anthony fleury
  * creation date : 18.05.2017
+ * thread use to listen to a specific client message
 */
 public class ClientListener extends Thread
 {
@@ -27,6 +29,10 @@ public class ClientListener extends Thread
         System.out.println("in server ok");
     }
 
+    /**
+     * listen to packet from client
+     * if a new packet is received send it to the clientDispatcher
+     */
     @Override
     public void run()
     {
@@ -66,6 +72,7 @@ public class ClientListener extends Thread
             e.printStackTrace();
         }
 
+        //delete client information
         clientInfo.clientSender.interrupt();
 
         serverDispatcher.deleteClient(clientInfo);

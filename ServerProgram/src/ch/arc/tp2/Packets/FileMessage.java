@@ -4,7 +4,7 @@ import java.io.File;
 
 /*
  * Project Name : ServerProgram
- * author : jonathan.guerne
+ * author : jonathan.guerne & anthony fleury
  * creation date : 22.05.2017
 */
 public class FileMessage implements Packet
