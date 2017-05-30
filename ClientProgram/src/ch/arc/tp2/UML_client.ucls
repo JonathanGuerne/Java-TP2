@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="ch.arc.tp2.model.ServerConfig" project="TP2 - ClientProgram" 
     file="/TP2 - ClientProgram/src/ch/arc/tp2/model/ServerConfig.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="697" y="669"/>    
+    <position height="-1" width="-1" x="714" y="693"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="ch.arc.tp2.view.ChatController.NetworkService" project="TP2 - ClientProgram" 
     file="/TP2 - ClientProgram/src/ch/arc/tp2/view/ChatController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="471" y="607"/>    
+    <position height="-1" width="-1" x="486" y="579"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,141 +48,158 @@
   </class>  
   <class id="6" language="java" name="ch.arc.tp2.view.ServerEditDialogController" project="TP2 - ClientProgram" 
     file="/TP2 - ClientProgram/src/ch/arc/tp2/view/ServerEditDialogController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1184" y="656"/>    
+    <position height="-1" width="-1" x="1178" y="688"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="7">    
+  <class id="7" language="java" name="ch.arc.tp2.Service.Sender" project="TP2 - ClientProgram" 
+    file="/TP2 - ClientProgram/src/ch/arc/tp2/Service/Sender.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="489" y="795"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="8">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="9" name="mainApp">        
+        <position height="0" width="0" x="-73" y="0"/>      
+      </attribute>      
+      <multiplicity id="10" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-73" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="11">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="8" name="mainController">        
+      <attribute id="12" name="chatController">        
+        <position height="0" width="0" x="-135" y="32"/>      
+      </attribute>      
+      <multiplicity id="13" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-135" y="32"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="14">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="15" name="sender"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="17">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </nesting>  
+  <association id="18">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="mainController">        
         <position height="0" width="0" x="-181" y="32"/>      
       </attribute>      
-      <multiplicity id="9" minimum="0" maximum="1">        
+      <multiplicity id="20" minimum="0" maximum="1">        
         <position height="0" width="0" x="-181" y="32"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="10">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="11" name="serverConfig">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </attribute>      
-      <multiplicity id="12" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="13">    
-    <bendpoint x="1039" y="149"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="14" name="chatController">        
-        <position height="0" width="0" x="-135" y="32"/>      
-      </attribute>      
-      <multiplicity id="15" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-135" y="32"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="16">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="17" name="mainApp">        
-        <position height="0" width="0" x="-73" y="0"/>      
-      </attribute>      
-      <multiplicity id="18" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-73" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
-    <bendpoint x="1022" y="472"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="20" name="serverConfig">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </attribute>      
-      <multiplicity id="21" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="22">    
+  <dependency id="21">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <nesting id="23">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </nesting>  
-  <association id="24">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="25" name="chatController">        
-        <position height="0" width="0" x="-135" y="32"/>      
+  <association id="22">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="23" name="serverConfig">        
+        <position height="0" width="0" x="17" y="-41"/>      
       </attribute>      
-      <multiplicity id="26" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-135" y="32"/>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="17" y="-41"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="27">    
+  <association id="25">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="28" name="mainApp">        
+      <attribute id="26" name="mainApp">        
         <position height="0" width="0" x="-73" y="0"/>      
       </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
+      <multiplicity id="27" minimum="0" maximum="1">        
         <position height="0" width="0" x="-73" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="31" name="serverConfig">        
-        <position height="0" width="0" x="0" y="-65"/>      
+  <association id="28">    
+    <bendpoint x="1022" y="472"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="29" name="serverConfig">        
+        <position height="0" width="0" x="17" y="-41"/>      
       </attribute>      
-      <multiplicity id="32" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="-65"/>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="17" y="-41"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="33">    
+  <association id="31">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="34" name="networkService">        
-        <position height="0" width="0" x="53" y="-36"/>      
+      <attribute id="32" name="serverConfig">        
+        <position height="18" width="71" x="611" y="491"/>      
       </attribute>      
-      <multiplicity id="35" minimum="0" maximum="1">        
-        <position height="0" width="0" x="53" y="-36"/>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="16" width="23" x="685" y="493"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <bendpoint x="1039" y="149"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="35" name="chatController">        
+        <position height="0" width="0" x="-135" y="32"/>      
+      </attribute>      
+      <multiplicity id="36" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-135" y="32"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="38" name="serverConfig">        
+        <position height="0" width="0" x="17" y="-41"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="0" width="0" x="17" y="-41"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="41" name="networkService">        
+        <position height="0" width="0" x="68" y="-64"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="1">        
+        <position height="0" width="0" x="68" y="-64"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="37" name="serverConfig">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </attribute>      
-      <multiplicity id="38" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="-65"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
