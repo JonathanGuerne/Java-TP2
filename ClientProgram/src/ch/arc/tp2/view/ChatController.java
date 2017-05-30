@@ -232,14 +232,14 @@ public class ChatController
         }
 
         if(newFile.exists()){
-            try
-            {
-                desktop.open(newFile);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+//            try
+//            {
+//                desktop.open(newFile);
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
         }
     }
 
