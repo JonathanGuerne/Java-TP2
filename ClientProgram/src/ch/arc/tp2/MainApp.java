@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -117,6 +118,7 @@ public class MainApp extends Application
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
+            primaryStage.getIcons().add(new Image("file:icon.png"));
 
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {
@@ -129,7 +131,7 @@ public class MainApp extends Application
                     if (dir.exists() && dir.list().length > 0)
                     {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION
-                                , "Delete files in download directory ?"
+                                , "Delete files in download directory ("+dir.list().length+" file(s)) ?"
                                 , ButtonType.YES, ButtonType.NO,ButtonType.CANCEL);
                         alert.showAndWait();
                         if (alert.getResult() == ButtonType.YES){

@@ -5,12 +5,15 @@ import ch.arc.tp2.model.ServerConfig;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.io.File;
 
 
 /**
@@ -163,8 +166,27 @@ public class RootLayoutController
             }
             updateServerInfo();
         }
+    }
 
 
+    @FXML
+    public void handleDeleteDirContent(){
+        String folderPath = System.getProperty("user.home") + File.separator + "chatDownloads";
+        File dir = new File(folderPath);
+        if (dir.exists() && dir.list().length > 0)
+        {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION
+                    , "Delete files in download directory ("+dir.list().length+" file(s)) ?"
+                    , ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES){
+                File[] entries = dir.listFiles();
+                for (File f : entries)
+                {
+                    f.delete();
+                }
+            }
+        }
     }
 
     /**
