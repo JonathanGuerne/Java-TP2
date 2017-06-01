@@ -14,6 +14,7 @@ import ch.arc.tp2.model.ServerConfig;
 import ch.arc.tp2.view.ChatController;
 import ch.arc.tp2.view.RootLayoutController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -83,7 +84,11 @@ public class MainApp extends Application
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ChatBox");
 
+        Platform.setImplicitExit(false);
+
         serverConfig = new ServerConfig();
+
+        System.setProperty("prism.lcdtext", "false");
 
         initRootLayout();
 
@@ -125,7 +130,7 @@ public class MainApp extends Application
                     {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION
                                 , "Delete files in download directory ?"
-                                , ButtonType.YES, ButtonType.NO);
+                                , ButtonType.YES, ButtonType.NO,ButtonType.CANCEL);
                         alert.showAndWait();
                         if (alert.getResult() == ButtonType.YES){
                             File[] entries = dir.listFiles();
@@ -133,6 +138,9 @@ public class MainApp extends Application
                             {
                                 f.delete();
                             }
+                        }
+                        else if(alert.getResult() == ButtonType.CANCEL){
+                            event.consume();
                         }
                     }
                 }

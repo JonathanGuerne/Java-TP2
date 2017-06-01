@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -8,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.arc.tp2.view.RootLayoutController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.arc.tp2.view.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -33,12 +38,37 @@
    <bottom>
       <AnchorPane id="statusBar" prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="lb_serverAddress_text" layoutX="147.0" layoutY="5.0" text="Server Address :" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lb_serverPort_text" layoutX="401.0" layoutY="5.0" text="Port :" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lb_status_text" layoutX="14.0" layoutY="16.0" text="Status :" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lb_status" layoutX="79.0" layoutY="10.0" prefHeight="31.0" prefWidth="58.0" text="..." AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lb_serverAddress" layoutX="270.0" layoutY="10.0" prefHeight="31.0" prefWidth="120.0" text="..." AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lb_serverPort" layoutX="457.0" layoutY="10.0" prefHeight="31.0" prefWidth="124.0" text="..." AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button mnemonicParsing="false" onAction="#handleRefresh" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <HBox layoutX="15.0" layoutY="15.0" prefHeight="31.0" prefWidth="498.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Label fx:id="lb_status_text" text="Status :">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lb_status" prefHeight="31.0" prefWidth="40.0" text="..." />
+                  <Label fx:id="lb_serverAddress_text" text="Server Address :">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lb_serverAddress" prefHeight="21.0" prefWidth="99.0" text="..." />
+                  <Label fx:id="lb_serverPort_text" text="Port :">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lb_serverPort" prefHeight="31.0" prefWidth="100.0" text="..." />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

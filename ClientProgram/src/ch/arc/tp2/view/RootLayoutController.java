@@ -2,11 +2,16 @@ package ch.arc.tp2.view;
 
 import ch.arc.tp2.MainApp;
 import ch.arc.tp2.model.ServerConfig;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 
 /**
  * Main frame with menu, containing the chatroom stage
@@ -35,6 +40,9 @@ public class RootLayoutController
     @FXML
     private Label lb_serverPort;
 
+    @FXML
+    private ImageView img_refresh;
+
 
     /**
      * The constructor.
@@ -43,6 +51,22 @@ public class RootLayoutController
     public RootLayoutController()
     {
 
+    }
+
+
+    @FXML
+    public void handleRefresh()
+    {
+        if (serverConfig.getConnectionStatus() != "OK")
+        {
+            chatController.stopServices();
+            boolean success = this.connectToServer();
+            if (success)
+            {
+                chatController.startNetworkService();
+            }
+            updateServerInfo();
+        }
     }
 
 
@@ -87,7 +111,8 @@ public class RootLayoutController
 
     /**
      * Updates the different information about the server configuration (bottom)
-     *  @param address
+     *
+     * @param address
      * @param port
      * @param succes
      */
@@ -105,7 +130,12 @@ public class RootLayoutController
     @FXML
     private void handleCloseMenu()
     {
-        stage.close();
+        stage.fireEvent(
+                new WindowEvent(
+                        stage,
+                        WindowEvent.WINDOW_CLOSE_REQUEST
+                )
+        );
     }
 
     /**
@@ -122,11 +152,12 @@ public class RootLayoutController
         boolean okClicked = mainApp.showServerEditDialog();
         if (okClicked)
         {
-            if(serverConfig.getServerPort() != temp_port || serverConfig.getServerAddress()!= temp_adresse)
+            if (serverConfig.getServerPort() != temp_port || serverConfig.getServerAddress() != temp_adresse)
             {
                 chatController.stopServices();
                 boolean success = this.connectToServer();
-                if(success){
+                if (success)
+                {
                     chatController.startNetworkService();
                 }
             }

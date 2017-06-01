@@ -10,18 +10,15 @@ import ch.arc.tp2.model.ServerConfig;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Optional;
 
 /**
  * Chatroom
