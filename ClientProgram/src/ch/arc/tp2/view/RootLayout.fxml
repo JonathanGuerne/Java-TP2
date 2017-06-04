@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ch.arc.tp2.view.RootLayoutController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.arc.tp2.view.RootLayoutController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleCloseMenu" text="Close"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCloseMenu" text="Close" />
                     </items>
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleDeleteDirContent" text="Delete downloaded files"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleDeleteDirContent" text="Delete downloaded files" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleServConfigMenu" text="Server Configuration"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleServConfigMenu" text="Server Configuration" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About" />
                     </items>
                 </Menu>
             </menus>
@@ -35,42 +40,40 @@
     <bottom>
         <AnchorPane id="statusBar" prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" onAction="#handleRefresh" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                <Button mnemonicParsing="false" onAction="#handleRefresh" prefWidth="96.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@refresh.png"/>
+                                <Image url="@refresh.png" />
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <HBox layoutX="15.0" layoutY="15.0" prefHeight="31.0" prefWidth="498.0" AnchorPane.bottomAnchor="10.0"
-                      AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="10.0">
+                <HBox layoutX="15.0" layoutY="15.0" prefHeight="31.0" prefWidth="498.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="10.0">
                     <children>
                         <Label fx:id="lb_status_text" text="Status :">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lb_status" prefHeight="31.0" prefWidth="40.0" text="..."/>
+                        <Label fx:id="lb_status" prefHeight="31.0" prefWidth="40.0" text="..." />
                         <Label fx:id="lb_serverAddress_text" text="Server Address :">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lb_serverAddress" prefHeight="21.0" prefWidth="99.0" text="..."/>
+                        <Label fx:id="lb_serverAddress" prefHeight="21.0" prefWidth="99.0" text="..." />
                         <Label fx:id="lb_serverPort_text" text="Port :">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lb_serverPort" prefHeight="31.0" prefWidth="100.0" text="..."/>
+                        <Label fx:id="lb_serverPort" prefHeight="31.0" prefWidth="100.0" text="..." />
                     </children>
                 </HBox>
             </children>
             <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </AnchorPane>
     </bottom>

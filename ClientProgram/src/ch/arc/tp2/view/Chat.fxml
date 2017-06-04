@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="350.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.arc.tp2.view.ChatController">
+<AnchorPane prefHeight="350.0" prefWidth="700.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.arc.tp2.view.ChatController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,7 +21,7 @@
             </TextArea>
             <HBox prefHeight="62.0" prefWidth="580.0">
                <children>
-                  <TextField fx:id="tf_message" prefHeight="41.0" prefWidth="368.0" stylesheets="@DarkTheme.css" />
+                  <TextField fx:id="tf_message" prefHeight="41.0" prefWidth="368.0" stylesheets="@DarkTheme.css" HBox.hgrow="ALWAYS" />
                   <Button fx:id="bt_send" defaultButton="true" mnemonicParsing="false" onAction="#handleSendButton" prefHeight="62.0" prefWidth="96.0" text="Send">
                      <HBox.margin>
                         <Insets left="10.0" />
