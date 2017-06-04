@@ -2,13 +2,11 @@ package ch.arc.tp2.view;
 
 import ch.arc.tp2.MainApp;
 import ch.arc.tp2.model.ServerConfig;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -57,6 +55,9 @@ public class RootLayoutController
     }
 
 
+    /**
+     * Try to stop and reconnect to the server
+     */
     @FXML
     public void handleRefresh()
     {
@@ -95,7 +96,7 @@ public class RootLayoutController
     /**
      * Sets the stage of the main window.
      *
-     * @param dialogStage
+     * @param stage
      */
     public void setDialogStage(Stage stage)
     {
@@ -114,10 +115,6 @@ public class RootLayoutController
 
     /**
      * Updates the different information about the server configuration (bottom)
-     *
-     * @param address
-     * @param port
-     * @param succes
      */
     public void updateServerInfo()
     {
@@ -169,6 +166,9 @@ public class RootLayoutController
     }
 
 
+    /**
+     * Delete the transfered files folder (asks by dialog)
+     */
     @FXML
     public void handleDeleteDirContent(){
         String folderPath = System.getProperty("user.home") + File.separator + "chatDownloads";
@@ -217,6 +217,8 @@ public class RootLayoutController
 
     /**
      * Try to connect to the server and update the status into the server config
+     * 
+     * @return success of connection (boolean)
      */
     public boolean connectToServer()
     {

@@ -6,11 +6,11 @@ import ch.arc.tp2.Packets.TextMessage;
 import java.io.*;
 import java.util.ArrayList;
 
-/*
+/**
  * Project Name : ClientProgram
- * author : jonathan.guerne
- * creation date : 18.05.2017
-*/
+ * @author anthony.fleury, guerne.jonathan
+ * @date  18.05.2017
+ */
 public class Sender extends Thread
 {
 

@@ -100,6 +100,9 @@ public class ChatController
 
     }
 
+    /**
+     * Method to send file to server (linked to SendFile button)
+     */
     @FXML
     public void handleSendFileButton()
     {
@@ -170,12 +173,18 @@ public class ChatController
         this.serverConfig = serverConfig;
     }
 
+    /**
+     * Disable the send button and the textfield
+     */
     public void disableSending()
     {
         tf_message.setDisable(true);
         bt_send.setDisable(true);
     }
 
+    /**
+     * Enable the send button and the textfield
+     */
     public void enableSending()
     {
         tf_message.setDisable(false);
@@ -191,6 +200,10 @@ public class ChatController
         networkService.start();
     }
 
+    /**
+     * Handle a file sent and display path and store it
+     * @param fileMessage
+     */
     public synchronized void showDownloadFileDialog(FileMessage fileMessage)
     {
 
@@ -228,7 +241,7 @@ public class ChatController
             e.printStackTrace();
         }
 
-        if(newFile.exists()){
+//        if(newFile.exists()){
 //            try
 //            {
 //                desktop.open(newFile);
@@ -237,7 +250,7 @@ public class ChatController
 //            {
 //                e.printStackTrace();
 //            }
-        }
+//        }
     }
 
 

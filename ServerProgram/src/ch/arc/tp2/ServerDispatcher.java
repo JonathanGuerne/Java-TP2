@@ -6,24 +6,32 @@ import ch.arc.tp2.Packets.TextMessage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/*
+
+/**
  * Project Name : ServerProgram
- * author : jonathan.guerne & anthony fleury
- * creation date : 18.05.2017
- * class use to manage all clients
-*/
+ * @author anthony.fleury & guerne.jonathan
+ * @date reation date : 18.05.2017
+ * @description class use to manage all clients
+ */
 public class ServerDispatcher extends Thread
 {
 
     private ArrayList<Packet> messageQueue; //list of message to send
     private ArrayList<ClientInfo> clients; //list of clients
 
+    /**
+     * Constructor
+     */
     public ServerDispatcher()
     {
         messageQueue = new ArrayList<>();
         clients = new ArrayList<>();
     }
 
+    /**
+     * Adds a client to the server dispatcher
+     * @param clientInfo
+     */
     public synchronized void addClient(ClientInfo clientInfo)
     {
         clients.add(clientInfo);
@@ -53,6 +61,11 @@ public class ServerDispatcher extends Thread
 
     }
 
+    /**
+     * Adds the given message to the message queue to be dispatched
+     * @param clientInfo
+     * @param message
+     */
     public synchronized void dispatchMessage(ClientInfo clientInfo, Packet message)
     {
         messageQueue.add(message);

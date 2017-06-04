@@ -7,18 +7,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-/*
+/**
  * Project Name : ServerProgram
- * author : jonathan.guerne & anthony fleury
- * creation date : 18.05.2017
- * thread use to listen to a specific client message
-*/
+ * @author anthony.fleury, guerne.jonathan
+ * @date 18.05.2017
+ * 
+ * Thread use to listen to a specific client message
+ */
 public class ClientListener extends Thread
 {
     ServerDispatcher serverDispatcher;
     ClientInfo clientInfo;
     ObjectInputStream in;
 
+    /**
+     * Constructor
+     * @param serverDispatcher
+     * @param clientInfo
+     * @throws IOException
+     */
     public ClientListener(ServerDispatcher serverDispatcher, ClientInfo clientInfo) throws IOException
     {
         this.serverDispatcher = serverDispatcher;

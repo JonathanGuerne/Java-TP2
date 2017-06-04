@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/*
+
+/**
  * Project Name : ServerProgram
- * author : jonathan.guerne & anthony fleury
- * creation date : 18.05.2017
-*/
+ * @author anthony.fleury, guerne.jonathan
+ * @date 18.05.2017
+ */
 public class Server
 {
 

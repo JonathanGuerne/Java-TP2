@@ -1,10 +1,10 @@
 package ch.arc.tp2.Packets;
 
-/*
- * Project Name : ServerProgram
- * author : jonathan.guerne
- * creation date : 20.05.2017
-*/
+/**
+ * Project Name : ClientProgram
+ * @author anthony.fleury, guerne.jonathan
+ * @date  20.05.2017
+ */
 public class TextMessage implements Packet
 {
 

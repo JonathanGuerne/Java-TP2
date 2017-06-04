@@ -2,11 +2,11 @@ package ch.arc.tp2.Packets;
 
 import java.io.File;
 
-/*
- * Project Name : ServerProgram
- * author : jonathan.guerne
- * creation date : 22.05.2017
-*/
+/**
+ * Project Name : ClientProgram
+ * @author anthony.fleury, guerne.jonathan
+ * @date 22.05.2017
+ */
 public class FileMessage implements Packet
 {
     private static final long serialVersionUID = 1199932229201799095L;

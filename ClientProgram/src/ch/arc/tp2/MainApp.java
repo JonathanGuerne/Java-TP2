@@ -251,7 +251,7 @@ public class MainApp extends Application
     /**
      * Returns the main stage.
      *
-     * @return
+     * @return primaryStage
      */
     public Stage getPrimaryStage()
     {

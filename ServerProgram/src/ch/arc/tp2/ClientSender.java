@@ -7,13 +7,14 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/*
+
+/**
  * Project Name : ServerProgram
- * author : jonathan.guerne & anthony fleury
- * creation date : 18.05.2017
- * thread use to send information to the client
- * message are coming from the clientDispatcher
-*/
+ * @author anthony.fleury, guerne.jonathan
+ * @date 18.05.2017
+ * 
+ * Thread use to send information to the client message are coming from the clientDispatcher
+ */
 public class ClientSender extends Thread
 {
     ServerDispatcher serverDispatcher;
@@ -22,7 +23,12 @@ public class ClientSender extends Thread
 
     private ArrayList<Packet> messagesQueue; //list of message to send
 
-
+    /**
+     * Constructor
+     * @param serverDispatcher
+     * @param clientInfo
+     * @throws IOException
+     */
     public ClientSender(ServerDispatcher serverDispatcher, ClientInfo clientInfo) throws IOException
     {
         this.serverDispatcher = serverDispatcher;
@@ -49,6 +55,10 @@ public class ClientSender extends Thread
         notify();
     }
 
+    /**
+     * Sends the given message to clients
+     * @param message
+     */
     public void sendMessageToClient(Packet message)
     {
         try
@@ -63,6 +73,11 @@ public class ClientSender extends Thread
 
     }
 
+    /**
+     * Gets the next message from the message queue and return it
+     * @return Message
+     * @throws InterruptedException
+     */
     public synchronized Packet getNextMessageFromQueue() throws InterruptedException
     {
         while (messagesQueue.size() == 0) //if there's no message the thread will wait
